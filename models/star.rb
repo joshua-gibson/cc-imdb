@@ -10,4 +10,8 @@ class Star
     @last_name = options['last_name']
   end
 
+  def self.delete_all
+    sql = "DELETE FROM stars"
+    SqlRunner.run(sql)
+  end
 end

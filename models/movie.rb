@@ -10,5 +10,8 @@ class Movie
     @genre = options['genre']
   end
 
-
+  def self.delete_all
+    sql = "DELETE FROM movies"
+    SqlRunner.run(sql)
+  end
 end
