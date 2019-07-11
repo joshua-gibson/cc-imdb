@@ -16,4 +16,9 @@ class Casting
     SqlRunner.run(sql)
   end
 
+  def self.all
+    sql = "SELECT * FROM castings"
+    SqlRunner.run(sql)
+  end
+
 end

@@ -11,6 +11,7 @@ movie1 = Movie.new({
   'title' => 'The Matrix',
   'genre' => 'sci-fi'
 })
+movie1.save()
 
 star1 = Star.new({
   'first_name' => 'Keanu',

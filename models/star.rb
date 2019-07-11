@@ -14,4 +14,10 @@ class Star
     sql = "DELETE FROM stars"
     SqlRunner.run(sql)
   end
+
+  def self.all
+    sql = "SELECT * FROM stars"
+    SqlRunner.run(sql)
+  end
+
 end
