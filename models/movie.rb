@@ -41,7 +41,7 @@ class Movie
   end
 
   def budget
-    sql="SELECT SUM(m.budget) - SUM(c.fee) AS new_budget
+    sql="SELECT m.budget - SUM(c.fee) AS new_budget
           FROM movies m
           INNER JOIN castings c
             ON m.id = c.movie_id
