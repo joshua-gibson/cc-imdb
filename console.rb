@@ -9,9 +9,11 @@ Star.delete_all
 
 movie1 = Movie.new({
   'title' => 'The Matrix',
-  'genre' => 'sci-fi'
+  'genre' => 'fantasy'
 })
 movie1.save()
+movie1.genre = 'sci-fi'
+movie1.update()
 
 star1 = Star.new({
   'first_name' => 'Keanu',

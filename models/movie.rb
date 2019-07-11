@@ -19,6 +19,28 @@ class Movie
     @id = SqlRunner.run(sql, values).first['id'].to_i
   end
 
+  def update
+    sql = "
+    UPDATE movies
+    SET (title, genre) = ($1, $2)
+    WHERE id = $3"
+    values = [@title, @genre, @id]
+    SqlRunner.run(sql, values)
+  end
+
+  def self.find(id_to_find)
+    sql = "SELECT * FROM movies WHERE id  = $1"
+    values = [id_to_find]
+    result = SqlRunner.run(sql, values).first
+    return Movie.new(result)
+  end
+
+  def self.delete(id_to_delete)
+    sql = "DELETE FROM movies WHERE id  = $1"
+    values = [id_to_delete]
+    SqlRunner.run(sql, values)
+  end
+
   def self.delete_all
     sql = "DELETE FROM movies"
     SqlRunner.run(sql)
@@ -29,5 +51,4 @@ class Movie
     result = SqlRunner.run(sql)
     return result.map { |m| Movie.new(m) }
   end
-
 end
