@@ -2,29 +2,30 @@ require_relative('../db/sql_runner')
 
 class Movie
   attr_reader :id
-  attr_accessor :title, :genre
+  attr_accessor :title, :genre, :budget
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @title = options['title']
     @genre = options['genre']
+    @budget = options['budget'].to_i
   end
 
   def save
     sql = "
-      INSERT INTO movies (title, genre)
-      VALUES ($1, $2)
+      INSERT INTO movies (title, genre, budget)
+      VALUES ($1, $2, $3)
       RETURNING ID"
-    values = [@title, @genre]
+    values = [@title, @genre, @budget]
     @id = SqlRunner.run(sql, values).first['id'].to_i
   end
 
   def update
     sql = "
     UPDATE movies
-    SET (title, genre) = ($1, $2)
-    WHERE id = $3"
-    values = [@title, @genre, @id]
+    SET (title, genre, budget) = ($1, $2, $3)
+    WHERE id = $4"
+    values = [@title, @genre, @budget, @id]
     SqlRunner.run(sql, values)
   end
 
@@ -37,6 +38,17 @@ class Movie
     values = [@id]
     result = SqlRunner.run(sql, values)
     return result.map{|star| Star.new(star) }
+  end
+
+  def budget
+    sql="SELECT SUM(m.budget) - SUM(c.fee) AS new_budget
+          FROM movies m
+          INNER JOIN castings c
+            ON m.id = c.movie_id
+          WHERE c.movie_id = $1
+          GROUP BY m.id"
+    values = [@id]
+    return SqlRunner.run(sql, values).first['new_budget'].to_i
   end
 
   def self.find(id_to_find)

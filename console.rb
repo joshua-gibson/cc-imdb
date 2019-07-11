@@ -9,17 +9,20 @@ Star.delete_all
 
 movie1 = Movie.new({
   'title' => 'The Matrix',
-  'genre' => 'fantasy'
+  'genre' => 'fantasy',
+  'budget' => 63_000_000
 })
 
 movie2 = Movie.new({
   'title' => 'Point Break',
-  'genre' => 'action'
+  'genre' => 'action',
+  'budget' => 105_000_000
 })
 
 movie3 = Movie.new({
   'title' => 'Die Hard',
-  'genre' => 'action'
+  'genre' => 'action',
+  'budget' => 28_000_000
 })
 
 

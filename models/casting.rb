@@ -8,24 +8,24 @@ class Casting
     @id = options['id'].to_i if options['id']
     @movie_id = options['movie_id'].to_i
     @star_id = options['star_id'].to_i
-    @fee = options['id'].to_i
+    @fee = options['fee'].to_i
   end
 
   def save
     sql = "
-      INSERT INTO castings (movie_id, star_id)
-      VALUES ($1, $2)
+      INSERT INTO castings (movie_id, star_id, fee)
+      VALUES ($1, $2, $3)
       RETURNING ID"
-    values = [@movie_id, @star_id]
+    values = [@movie_id, @star_id, @fee]
     @id = SqlRunner.run(sql, values).first['id'].to_i
   end
 
   def update
     sql = "
     UPDATE castings
-    SET (movie_id, star_id) = ($1, $2)
-    WHERE id = $3"
-    values = [@movie_id, @star_id, @id]
+    SET (movie_id, star_id) = ($1, $2, $3)
+    WHERE id = $4"
+    values = [@movie_id, @star_id, @fee, @id]
     SqlRunner.run(sql, values)
   end
 
